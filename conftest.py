@@ -1,10 +1,11 @@
 import pytest
+from selene.support.shared import browser
 
-@pytest.fixture()
+
+@pytest.fixture(scope="function", autouse=True)
 def open_browser():
-    assert True, "Эта проверка упала в фикстуре"
-    b = "browser"
-    print("Браузер открыт")
+    browser.config.window_height = 1920
+    browser.config.window_width = 1080
+    b = browser.open('https://google.com/ncr')
     yield b
-    b=""
-    print("Браузер закрыт")
+    browser.close()
